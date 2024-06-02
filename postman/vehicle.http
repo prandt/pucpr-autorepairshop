@@ -1,0 +1,12 @@
+### List all Vechicles
+GET http://localhost:8080/api/vehicle
+
+### Create a vehicle
+POST http://localhost:8080/api/vehicle
+Content-Type: application/json
+
+{
+  "type": "CAR",
+  "numberPlate": "ABC-123",
+  "manufactureDate": "21902192012"
+}
