@@ -17,4 +17,6 @@ class VehicleService (
             }
     
     fun getAll(): MutableList<Vehicle> = vehicleRepository.findAll()
+
+    fun getById(id: Long): Vehicle? = vehicleRepository.findByIdOrNull(id)
 }

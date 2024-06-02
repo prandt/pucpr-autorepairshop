@@ -1,2 +1,7 @@
+@id = 1
+
 ### List all Vechicles
 GET http://localhost:8080/api/vehicle
+
+### Get vehicle by ID
+GET http://localhost:8080/api/vehicle/{{id}}
