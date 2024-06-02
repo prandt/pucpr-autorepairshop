@@ -1,6 +1,5 @@
 package com.rprandt.autorepairshop.vehicle
 
-import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.rprandt.autorepairshop.costumer.Costumer
 import jakarta.persistence.*
