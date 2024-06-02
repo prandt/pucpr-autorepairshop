@@ -15,4 +15,6 @@ class VehicleService (
             ?.let {
                 vehicleRepository.save(request.toVehicle(it))
             }
+    
+    fun getAll(): MutableList<Vehicle> = vehicleRepository.findAll()
 }
