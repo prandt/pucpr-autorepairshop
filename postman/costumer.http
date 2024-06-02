@@ -1,0 +1,28 @@
+@costumerId = 1
+
+### Create a costumer
+POST http://localhost:8080/api/costumer
+Content-Type: application/json
+
+{
+  "name": "Richard Prandt",
+  "email": "richard@email.com"
+}
+
+
+### Get costumer by id
+GET http://localhost:8080/api/costumer/{{costumerId}}
+
+
+### Add a vehicle
+POST http://localhost:8080/api/costumer/{{costumerId}}/vehicle
+Content-Type: application/json
+
+{
+  "manufactureDate": "121212",
+  "numberPlate": "ABC-121",
+  "type": "BIKE"
+}
+
+### Get vehicle`s user
+GET http://localhost:8080/api/costumer/{{costumerId}}/vehicles

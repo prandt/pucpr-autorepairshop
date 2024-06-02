@@ -12,10 +12,5 @@ class VehicleController (
     val vehicleService: VehicleService
 ) {
 
-    @GetMapping
-    fun findAll() = vehicleService.findAll()
-
-    @PostMapping
-    fun create(@RequestBody vehicle: Vehicle) = vehicleService.save(vehicle)
 
 }
