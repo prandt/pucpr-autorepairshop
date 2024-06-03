@@ -61,6 +61,7 @@ class CostumerService(
     fun update(costumer: Costumer) =
         costumer.let {
             if (it.id == null) throw BadRequestException("ID is required")
+            costumer.password = passwordEncoder.encode(it.password)
             costumerRepository.save(costumer)
         }
 
