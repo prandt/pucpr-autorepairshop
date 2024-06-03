@@ -1,4 +1,4 @@
-@costumerId = 1
+@costumerId = 3
 
 ### Create a costumer
 POST http://localhost:8080/api/costumer
