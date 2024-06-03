@@ -22,8 +22,9 @@ class CostumerService(
     fun save(costumer: Costumer) =
         try {
             costumer.password = passwordEncoder.encode(costumer.password)
-            costumerRepository.save(costumer)
-            log.info("Saved costumer: {}", costumer)
+            costumerRepository.save(costumer).also {
+                log.info("Saved costumer: {}", it.email)
+            }
         } catch (e: Throwable) {
             log.warn("Error while saving costumer", e)
             throw BadRequestException("Error while saving costumer")
