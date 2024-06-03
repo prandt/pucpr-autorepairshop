@@ -1,5 +1,6 @@
 package com.rprandt.autorepairshop.vehicle
 
+import com.rprandt.autorepairshop.costumer.CostumerResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,4 +24,10 @@ class VehicleController (
         vehicleService.getById(id)
             ?.let { ResponseEntity.ok(it) }
             ?:ResponseEntity.notFound().build()
+
+    @GetMapping("/{id}/costumer")
+    fun getCostumer(@PathVariable id: Long): ResponseEntity<CostumerResponse> =
+        vehicleService.getCostumer(id)
+            ?.let { ResponseEntity.ok().body(CostumerResponse(it)) }
+            ?: ResponseEntity.notFound().build()
 }
