@@ -23,6 +23,7 @@ class CostumerService(
         try {
             costumer.password = passwordEncoder.encode(costumer.password)
             costumerRepository.save(costumer)
+            log.info("Saved costumer: {}", costumer)
         } catch (e: Throwable) {
             log.warn("Error while saving costumer", e)
             throw BadRequestException("Error while saving costumer")
@@ -39,6 +40,7 @@ class CostumerService(
            }
            .let {
                save(it)
+               log.info("Added vehicle to costumer: {}", it)
            }
 
     fun getCostumerVehicles(costumerId: Long) =
@@ -47,6 +49,7 @@ class CostumerService(
     fun delete(costumerId: Long) =
         try {
             costumerRepository.deleteById(costumerId)
+            log.info("Deleted costumer: {}", costumerId)
         } catch (e: Throwable) {
             log.warn("Error to delete {}", costumerId)
             throw e
