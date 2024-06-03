@@ -1,4 +1,4 @@
-@costumerId = 3
+@costumerId = 5
 
 ### Create a costumer
 POST http://localhost:8080/api/costumer
@@ -6,7 +6,8 @@ Content-Type: application/json
 
 {
   "name": "Richard Prandt",
-  "email": "richard@email.com"
+  "email": "richard@email.com",
+  "password": "josesito"
 }
 
 

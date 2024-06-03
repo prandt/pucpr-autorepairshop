@@ -22,12 +22,10 @@ class VehicleController (
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Vehicle> =
         vehicleService.getById(id)
-            ?.let { ResponseEntity.ok(it) }
-            ?:ResponseEntity.notFound().build()
+            .let { ResponseEntity.ok(it) }
 
     @GetMapping("/{id}/costumer")
     fun getCostumer(@PathVariable id: Long): ResponseEntity<CostumerResponse> =
         vehicleService.getCostumer(id)
-            ?.let { ResponseEntity.ok().body(CostumerResponse(it)) }
-            ?: ResponseEntity.notFound().build()
+            .let { ResponseEntity.ok().body(CostumerResponse(it)) }
 }

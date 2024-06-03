@@ -2,6 +2,7 @@ package com.rprandt.autorepairshop.vehicle
 
 import com.rprandt.autorepairshop.costumer.Costumer
 import com.rprandt.autorepairshop.costumer.CostumerRepository
+import com.rprandt.autorepairshop.exception.NotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -15,12 +16,15 @@ class VehicleService (
         costumerRepository.findByIdOrNull(costumerId)
             ?.let {
                 vehicleRepository.save(request.toVehicle(it))
-            }
+            } ?: throw NotFoundException("Costumer not found")
     
     fun getAll(): MutableList<Vehicle> = vehicleRepository.findAll()
 
-    fun getById(id: Long): Vehicle? = vehicleRepository.findByIdOrNull(id)
+    fun getById(id: Long): Vehicle =
+        vehicleRepository.findByIdOrNull(id)
+            ?: throw NotFoundException("Vehicle not found")
 
-    fun getCostumer(id: Long): Costumer? =
+    fun getCostumer(id: Long): Costumer =
         vehicleRepository.findByIdOrNull(id)?.costumer
+            ?: throw NotFoundException("Costumer not found")
 }

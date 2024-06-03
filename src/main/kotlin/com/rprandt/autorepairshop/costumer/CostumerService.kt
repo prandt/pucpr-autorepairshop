@@ -1,9 +1,12 @@
 package com.rprandt.autorepairshop.costumer
 
-import com.rprandt.autorepairshop.security.Jwt
+import com.rprandt.autorepairshop.exception.BadRequestException
+import com.rprandt.autorepairshop.exception.NotFoundException
 import com.rprandt.autorepairshop.vehicle.VehicleRepository
 import com.rprandt.autorepairshop.vehicle.VehicleRequest
 import com.rprandt.autorepairshop.vehicle.VehicleService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -12,20 +15,26 @@ class CostumerService(
     private val costumerRepository: CostumerRepository,
     private val vehicleService: VehicleService,
     private val vehicleRepository: VehicleRepository,
-    private val jwt: Jwt
 ) {
 
-    fun save(costumer: Costumer) = costumerRepository.save(costumer)
+    fun save(costumer: Costumer) =
+        try {
+            costumerRepository.save(costumer)
+        } catch (e: Throwable) {
+            log.warn("Error while saving costumer", e)
+            throw BadRequestException("Error while saving costumer")
+        }
 
-    fun findById(costumerId: Long) = costumerRepository.findByIdOrNull(costumerId)
+    fun findById(costumerId: Long) =
+        costumerRepository.findByIdOrNull(costumerId) ?: throw NotFoundException("Not found costumer")
 
     fun addVehicle(costumerId: Long, request: VehicleRequest) =
        vehicleService.create(costumerId, request)
-           ?.let {
+           .let {
                it.costumer.vehicles.add(it)
                it.costumer
            }
-           ?.let {
+           .let {
                save(it)
            }
 
@@ -33,8 +42,23 @@ class CostumerService(
         vehicleRepository.findVehicleByCostumerId(costumerId)
 
     fun delete(costumerId: Long) =
-        costumerRepository.deleteById(costumerId)
+        try {
+            costumerRepository.deleteById(costumerId)
+        } catch (e: Throwable) {
+            log.warn("Error to delete {}", costumerId)
+            throw e
+        }
 
     fun findAll(): MutableList<Costumer> = costumerRepository.findAll()
+
+    fun update(costumer: Costumer) =
+        costumer.let {
+            if (it.id == null) throw BadRequestException("ID is required")
+            costumerRepository.save(costumer)
+        }
+
+    companion object {
+        val log: Logger = LoggerFactory.getLogger(CostumerService::class.java)
+    }
 
 }
