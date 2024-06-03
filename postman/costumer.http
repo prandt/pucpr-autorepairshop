@@ -26,3 +26,9 @@ Content-Type: application/json
 
 ### Get vehicle`s user
 GET http://localhost:8080/api/costumer/{{costumerId}}/vehicles
+
+### List all costumers
+GET http://localhost:8080/api/costumer
+
+### Delete a costumer
+DELETE http://localhost:8080/api/costumer/1

@@ -29,4 +29,9 @@ class CostumerService(
 
     fun getCostumerVehicles(costumerId: Long) =
         vehicleRepository.findVehicleByCostumerId(costumerId)
+
+    fun delete(costumerId: Long) =
+        costumerRepository.deleteById(costumerId)
+
+    fun findAll(): MutableList<Costumer> = costumerRepository.findAll()
 }

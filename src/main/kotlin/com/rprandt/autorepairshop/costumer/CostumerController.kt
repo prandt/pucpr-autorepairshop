@@ -1,6 +1,5 @@
 package com.rprandt.autorepairshop.costumer
 
-import com.rprandt.autorepairshop.vehicle.Vehicle
 import com.rprandt.autorepairshop.vehicle.VehicleRequest
 import com.rprandt.autorepairshop.vehicle.VehicleResponse
 import org.springframework.http.HttpStatus
@@ -43,5 +42,17 @@ class CostumerController(
     fun getVehicles(@PathVariable costumerId: Long): ResponseEntity<List<VehicleResponse>> =
         costumerService.getCostumerVehicles(costumerId)
             .map { VehicleResponse(it) }
+            .let { ResponseEntity.ok().body(it) }
+
+    @DeleteMapping("/{costumerId}")
+    fun delete(@PathVariable costumerId: Long): ResponseEntity<Void> =
+        costumerService.delete(costumerId)
+            .run {
+                ResponseEntity.noContent().build()
+            }
+    @GetMapping
+    fun findAll(): ResponseEntity<List<CostumerResponse>> =
+        costumerService.findAll()
+            .map { CostumerResponse(it) }
             .let { ResponseEntity.ok().body(it) }
 }
