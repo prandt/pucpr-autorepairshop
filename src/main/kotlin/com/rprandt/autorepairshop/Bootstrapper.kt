@@ -20,16 +20,19 @@ class Bootstrapper(
                 id = 1,
                 name = "Jose da Silva",
                 email = "jose@email.com",
+                password = "jose123"
             ),
             Costumer(
                 id = 2,
                 name = "Richard Prandt",
                 email = "richard@email.com",
+                password = "richard123"
             ),
             Costumer(
                 id = 3,
                 name = "Eliza Podesta",
                 email = "eliza@email.com",
+                password = "eliza123"
             )
         )
 

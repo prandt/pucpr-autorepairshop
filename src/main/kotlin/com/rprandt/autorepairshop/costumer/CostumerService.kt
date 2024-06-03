@@ -1,5 +1,6 @@
 package com.rprandt.autorepairshop.costumer
 
+import com.rprandt.autorepairshop.security.Jwt
 import com.rprandt.autorepairshop.vehicle.VehicleRepository
 import com.rprandt.autorepairshop.vehicle.VehicleRequest
 import com.rprandt.autorepairshop.vehicle.VehicleService
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service
 class CostumerService(
     private val costumerRepository: CostumerRepository,
     private val vehicleService: VehicleService,
-    private val vehicleRepository: VehicleRepository
+    private val vehicleRepository: VehicleRepository,
+    private val jwt: Jwt
 ) {
 
     fun save(costumer: Costumer) = costumerRepository.save(costumer)
@@ -34,4 +36,5 @@ class CostumerService(
         costumerRepository.deleteById(costumerId)
 
     fun findAll(): MutableList<Costumer> = costumerRepository.findAll()
+
 }

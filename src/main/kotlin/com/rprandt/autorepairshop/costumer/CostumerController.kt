@@ -2,6 +2,7 @@ package com.rprandt.autorepairshop.costumer
 
 import com.rprandt.autorepairshop.vehicle.VehicleRequest
 import com.rprandt.autorepairshop.vehicle.VehicleResponse
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -30,6 +31,7 @@ class CostumerController(
             } ?: ResponseEntity.notFound().build()
 
     @PostMapping("/{costumerId}/vehicle")
+    @SecurityRequirement(name = "Auth")
     fun addVehicle(
         @RequestBody vehicleRequest: VehicleRequest,
         @PathVariable costumerId: Long

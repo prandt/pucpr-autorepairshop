@@ -13,6 +13,7 @@ class Costumer (
     var name: String? = "",
     @Column(unique = true, nullable = false)
     var email: String? = null,
+    var password: String? = null,
     @OneToMany(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.ALL]
