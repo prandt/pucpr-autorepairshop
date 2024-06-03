@@ -8,6 +8,7 @@ import com.rprandt.autorepairshop.vehicle.VehicleService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,10 +16,12 @@ class CostumerService(
     private val costumerRepository: CostumerRepository,
     private val vehicleService: VehicleService,
     private val vehicleRepository: VehicleRepository,
+    private val passwordEncoder: BCryptPasswordEncoder
 ) {
 
     fun save(costumer: Costumer) =
         try {
+            costumer.password = passwordEncoder.encode(costumer.password)
             costumerRepository.save(costumer)
         } catch (e: Throwable) {
             log.warn("Error while saving costumer", e)

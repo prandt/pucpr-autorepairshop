@@ -7,12 +7,14 @@ import com.rprandt.autorepairshop.vehicle.VehicleRepository
 import com.rprandt.autorepairshop.vehicle.VehicleType
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
 class Bootstrapper(
     val costumerRepository: CostumerRepository,
     val vehicleRepository: VehicleRepository,
+    val passwordEncoder: BCryptPasswordEncoder
 ): ApplicationListener<ContextRefreshedEvent> {
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
         val costumers: List<Costumer> = listOf(
@@ -20,19 +22,19 @@ class Bootstrapper(
                 id = 1,
                 name = "Jose da Silva",
                 email = "jose@email.com",
-                password = "jose123"
+                password = passwordEncoder.encode("jose123")
             ),
             Costumer(
                 id = 2,
                 name = "Richard Prandt",
                 email = "richard@email.com",
-                password = "richard123"
+                password = passwordEncoder.encode("richard123")
             ),
             Costumer(
                 id = 3,
                 name = "Eliza Podesta",
                 email = "eliza@email.com",
-                password = "eliza123"
+                password = passwordEncoder.encode("eliza123")
             )
         )
 

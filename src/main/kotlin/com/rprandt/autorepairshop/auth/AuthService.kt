@@ -5,12 +5,14 @@ import com.rprandt.autorepairshop.costumer.CostumerResponse
 import com.rprandt.autorepairshop.security.Jwt
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class AuthService(
     private val costumerRepository: CostumerRepository,
-    private val jwt: Jwt
+    private val jwt: Jwt,
+    private val passwordEncoder: BCryptPasswordEncoder
 ) {
     fun login(request: LoginRequest): LoginResponse? {
         if (request.email == null) {
@@ -22,7 +24,7 @@ class AuthService(
             log.warn("Costumer {} not found", request.email)
             return null
         }
-        if (costumer.password != request.password) {
+        if (!passwordEncoder.matches(request.password, costumer.password)) {
             log.warn("Costumer passwords do not match")
             return null
         }
