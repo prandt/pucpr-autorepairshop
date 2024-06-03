@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -14,9 +15,12 @@ class VehicleController (
 ) {
 
     @GetMapping
-    fun getAll(): ResponseEntity<List<VehicleResponse>> =
-        vehicleService.getAll()
-            .map { VehicleResponse(it) }
+    fun getAll(
+        @RequestParam sortDir: String? = null
+    ): ResponseEntity<List<VehicleResponse>> =
+        SortDir.entries.firstOrNull { it.name == (sortDir ?: "ASC").uppercase() }
+            ?.let { vehicleService.getAll(it)}
+            ?.map { VehicleResponse(it) }
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("/{id}")

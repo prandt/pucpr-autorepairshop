@@ -5,6 +5,7 @@ import com.rprandt.autorepairshop.costumer.CostumerRepository
 import com.rprandt.autorepairshop.exception.NotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.data.domain.Sort
 
 @Service
 class VehicleService (
@@ -18,7 +19,11 @@ class VehicleService (
                 vehicleRepository.save(request.toVehicle(it))
             } ?: throw NotFoundException("Costumer not found")
     
-    fun getAll(): MutableList<Vehicle> = vehicleRepository.findAll()
+    fun getAll(dir: SortDir): MutableList<Vehicle> =
+        when(dir) {
+            SortDir.ASC -> vehicleRepository.findAll(Sort.by("type").ascending())
+            SortDir.DESC -> vehicleRepository.findAll(Sort.by("type").descending())
+        }
 
     fun getById(id: Long): Vehicle =
         vehicleRepository.findByIdOrNull(id)
